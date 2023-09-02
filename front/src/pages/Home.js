@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const Home = () => {
   const [image, setImage] = useState("");
   const [allImage, setAllImage] = useState([]);
-  const [username, setUsername] = useState(""); // Change to username
+  const [username, setUsername] = useState(""); 
 
   function convertToBase64(e) {
     var reader = new FileReader();
@@ -23,25 +23,25 @@ const Home = () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "Access-Control-Allow-Origin": "*", // Remove this line, it's not needed
+        "Access-Control-Allow-Origin": "*", 
       },
       body: JSON.stringify({
         base64: image,
-        username: username, // Use username field instead of userID
+        username: username, 
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // After uploading the image, fetch all images again to update the list
+       
         getImage();
       })
       .catch((error) => console.log("Error:", error));
   }
 
   function getImage() {
-    // Assuming you have the username of the logged-in user in the 'username' state
-    const currentUsername = username; // Use the 'username' state variable
+   
+    const currentUsername = username; 
 
     fetch(
       `http://localhost:3001/images/get-image?username=${currentUsername}`,
@@ -68,7 +68,7 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // After deleting the image, fetch all images again to update the list
+       
         getImage();
       })
       .catch((error) => console.log("Error:", error));
@@ -88,15 +88,14 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // When the component mounts, you can fetch the user ID from the backend (after the user logs in)
-    // and update the userID state accordingly
+   
 
     const storedUsername = window.localStorage.getItem("username");
 
-    // Update the username state with the retrieved username
+   
     if (storedUsername) {
       setUsername(storedUsername);
-      getImage(); // Fetch all images after getting the username
+      getImage(); 
     }
   }, []);
 
